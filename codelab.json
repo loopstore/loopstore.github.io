@@ -1,11 +1,11 @@
 {
-  "environment": "web",
+  "environment": "gh-pages",
   "source": "1JFuG_LgXHcF8Rx-RfBG_NE1YJ5G8wWPV8Zs6ZFZBnik",
   "format": "html",
   "prefix": "./",
   "mainga": "UA-49880327-14",
-  "updated": "2018-12-01T23:10:51Z",
-  "id": "tutorial-gcs",
+  "updated": "2018-12-02T10:05:56Z",
+  "id": "",
   "duration": 61,
   "title": "Loopstore: Building a store with LoopBack4",
   "author": "LoopStore",
@@ -29,5 +29,5 @@
     "useridnw01"
   ],
   "feedback": "https://github.com/loopstore/loopstore/issues",
-  "url": "tutorial-gcs"
+  "url": ""
 }

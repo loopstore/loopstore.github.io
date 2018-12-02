@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "source": "1y_HThLEerWrP6uSfiVvgAI08rKoXuMmHl2LHZL5R4R4",
+  "format": "html",
+  "prefix": "../",
+  "mainga": "UA-49880327-14",
+  "updated": "2018-12-02T10:02:27Z",
+  "id": "how-to-deploy-to-ibm-cloud",
+  "duration": 23,
+  "title": "Deploy your LoopStore to IBM Cloud free tier",
+  "author": "LoopStore",
+  "summary": "In this how-to we'll look at deploying the LoopStore app to IBM Cloud's free tier and connecting a Cloudant data source",
+  "theme": "loopback",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "LoopBack"
+  ],
+  "tags": [
+    "gcs",
+    "web"
+  ],
+  "feedback": "https://github.com/loopstore/loopstore-tutorial-v4/issues",
+  "url": "how-to-deploy-to-ibm-cloud"
+}

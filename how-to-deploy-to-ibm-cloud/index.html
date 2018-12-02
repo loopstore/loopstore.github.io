@@ -1,0 +1,222 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Deploy your LoopStore to IBM Cloud free tier</title>
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../elements/codelab.html">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <style is="custom-style">
+    body {
+      font-family: "Roboto",sans-serif;
+      background: var(--google-codelab-background, #F8F9FA);
+    }
+  </style>
+  
+</head>
+<body unresolved class="fullbleed">
+
+  <google-codelab title="Deploy your LoopStore to IBM Cloud free tier"
+                  environment="web"
+                  feedback-link="https://github.com/loopstore/loopstore-tutorial-v4/issues">
+    
+      <google-codelab-step label="About this tutorial" duration="1">
+        <p><a href="http://loopstore.github.io" target="_blank">Main Tutorial</a></p>
+<p>In this HOW-TO section we&#39;ll be creating a free tier IBM Cloud account and setting up Cloud Foundry app instance for deploying our LoopStore.</p>
+<p>We&#39;ll install and configure the IBM Cloud CLI for deploying our app..</p>
+<p>We&#39;ll also set up a Cloudant database service and update the code so we can use it to persist data for our <a href="https://loopback.io/doc/en/lb4/Model.html" target="_blank">Models</a>. </p>
+<h2>Why use IBM Cloud?</h2>
+<p>LoopBack apps can be hosted in any <a href="https://nodejs.org/" target="_blank">Node.js</a> environment and connect to a wide variety of data  sources. </p>
+<p><a href="https://www.ibm.com/cloud/" target="_blank">IBM Cloud</a> is a convenient option for getting our LoopStore up and running on the web. It offers full-stack cloud platform with over 170 products and services. It also offers a useful free tier to give developers a chance to explore, with no need to enter credit card details.</p>
+<p>All you really need is an email address to confirm your registration, a first and last name and your region to create an IBM id.</p>
+
+<h2 class="checklist">What you&#39;ll learn</h2>
+<ul class="checklist">
+<li>About IBM Cloud and free tier services</li>
+<li>Creating an IBM id </li>
+<li>Setting up a Node.js SDK instance in Cloud Foundry</li>
+<li>Setting up the Cloudant document database service</li>
+<li>Managing Environment Variables and configuring the LoopStore app to use them</li>
+<li>Connecting to the Cloudant database with LoopBack DataSources and Connectors</li>
+<li>Deploying the LoopStore app using the IBM Cloud CLI</li>
+<li>Setting up a local Cloudant database</li>
+<li>Considerations for Production Deployment</li>
+</ul>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="TLDR" duration="10">
+        <h2>Sign up for IBM Cloud and login to the console</h2>
+<h2>Create a Node.js SDK app instance on Cloud Foundry</h2>
+<p>You can use the <a href="https://console.bluemix.net/dashboard" target="_blank">console</a> side menu to jump to the Cloud Foundry overview page. Our LoopStore will live in the <a href="https://console.bluemix.net/dashboard/cloudfoundry?filter=cf_public" target="_blank">Public</a> section. </p>
+<p>Click on <a href="https://console.bluemix.net/catalog/?search=runtime" target="_blank">Create Resource</a> </p>
+<p>You&#39;ll end on the <a href="https://console.bluemix.net/catalog/" target="_blank">Catalog</a> </p>
+<p><strong>App name</strong>: Set this as <strong>loopstore</strong> to match the rest of the tutorial instructions, or chose your own name: you will configure the CLI to deploy to an app instance with this name.</p>
+<p><strong>Domain</strong>: When you deploy with the CLI, this is the value you will need to give as the <strong>API Endpoint</strong></p>
+<p><strong>Host name: </strong>Together with the <strong>Domain</strong> this forms the URL our LoopStore will be served from. You will need to choose something unique. You don&#39;t need to know this to configure the CLI, just to connect once the app is up and running. In the tutorial we&#39;ll refer it it as <strong>[my-hostname].</strong></p>
+<p><strong>Choose a region to deploy in</strong>: This will default to the region you chose when you signed up.</p>
+<p><strong>Choose an organisation and space</strong>: These will be your IBM id <strong>email address </strong>and the <strong>dev </strong>space, needed to configure the CLI as we noted on the Dashboard previously.</p>
+<p><strong>Pricing Plans</strong>: As promised, we&#39;re working with the worry free Lite tier: there&#39;s no possibility the app will generate charges. </p>
+<p>We&#39;ve got a total of 256MB of memory which we could share with other other app instances but for now we may as well just give our LoopStore the full quota, so select the <strong>256MB option</strong>.</p>
+<p>That&#39;s about it! </p>
+<p>Press create and (provided <strong>[my-hostname]</strong> is available) the platform will start spinning up the Node.js environment. </p>
+<h2>Set up a Cloudant database and note the connection string</h2>
+<h2>Install &amp; configure the ?IBM Cloud CLI</h2>
+<ul>
+<li>Login (set org, space, API endpoint)</li>
+<li>Get app manifest</li>
+<li>Inspect service status</li>
+</ul>
+<h2>Manage Cloud Foundry environment variables with cfenv  </h2>
+<h3><code>npm i cfenv --save</code></h3>
+<h2>Configure the DataSource in data.db to use loopback-connector-cloudant</h2>
+<h2>Deploy LoopStore to the cloud!</h2>
+<h2>Test your deployment</h2>
+<h2>Setting up a local Cloudant database</h2>
+<h2>Considerations for production deployment</h2>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Sign up for IBM Cloud and login to the console" duration="2">
+        <h2>Sign up for IBM Cloud and login to the console</h2>
+<p>Fill in your email, name, region <a href="https://console.bluemix.net/registration/" target="_blank">IBM Cloud signup page</a> and once you&#39;ve responded to the confirmation email and logged in you should end up with a lovely welcome message.</p>
+<p><img style="max-width: 329.79px" src="https://lh6.googleusercontent.com/WRf2zdlWUFDOY9Yd74z32tE6fcUGGI3QbvUDcBmJ2rTii95yOA03P58QGwwqcBABc6f21FonrYkEXrsQh3TqD23kgqsnqPsict7axzyzFdujnamC6CHiQSigZ2m7CClP5Y9jU7p1"></p>
+<p><strong>Welcome to IBM Cloud!</strong></p>
+<p>Note that the welcome message tells you that your account is all set up with a:</p>
+<ul>
+<li><strong>resource group</strong>;</li>
+<li><strong>org</strong>, and;</li>
+<li><strong>space</strong></li>
+</ul>
+<p>You&#39;ll need to know some of these to configure the CLI. </p>
+<p>Once you&#39;ve dismissed this message, you&#39;ll find yourself on your <a href="https://console.bluemix.net/dashboard/apps" target="_blank">IBM Cloud Dashboard</a>.</p>
+<p>Wondering why the console (and soon our LoopStore) are hosted at bluemix.net? - IBM Cloud <a href="https://www.ibm.com/blogs/bluemix/2017/10/bluemix-is-now-ibm-cloud/" target="_blank">changed its name from Bluemix in 2017</a></p>
+<p>You can see from the dropdowns at the top of the Dashboard that your <strong>organisation</strong> has been created using your <strong>email address</strong>, and there is a single <strong>space </strong>called <strong>dev</strong>.</p>
+<p><strong>These are the default settings that will be used when you create your Cloud Foundry app you will need them to configure the CLI.</strong></p>
+<p><img style="max-width: 435.50px" src="https://lh4.googleusercontent.com/EPNI2W8s2NiNVMc8Hs4_O5LmweWYg278w5YRq9eWuEcGpVTN602bseE7y0kVbvdzfaRX_Qi_k9jj-SioZPhBh204e6-l5-NEQ7lPge83XUtVG9an40_NkRtyA6pR3OvVc8H5bfgM"></p>
+<p><img style="max-width: 437.82px" src="https://lh3.googleusercontent.com/NQaqmMXbBFaHvPP4fUzsg_n3rt-8JrtVm03u621V6v1WzvCRJVGRg8n4ufh5qWm1bM-vsUcZb6jVYmeDLd_wclqB7gmrnol1fzRyoFU_pl4AACYQji2AfwRA02mEv-xKcJDGGfhy"></p>
+<p>Hit the hamburger top-left and you&#39;ll meet the side menu that allows you to find your way around the vast IBM Cloud platform.</p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create a Node.js SDK app instance on Cloud Foundry" duration="2">
+        <p>You can use the <a href="https://console.bluemix.net/dashboard" target="_blank">console</a> side menu to jump to the Cloud Foundry overview page. Our LoopStore will live in the <a href="https://console.bluemix.net/dashboard/cloudfoundry?filter=cf_public" target="_blank">Public</a> section. </p>
+<p>Click on <a href="https://console.bluemix.net/catalog/?search=runtime" target="_blank">Create Resource</a> </p>
+<p>You&#39;ll end on the <a href="https://console.bluemix.net/catalog/" target="_blank">Catalog</a> page (alternatively, you could have just clicked on <a href="https://console.bluemix.net/catalog/" target="_blank">Catalog</a> on the top menu, but it&#39;s good to take a look around).</p>
+<p>You now have a chance to see the full range of IBM Cloud tools and services. </p>
+<p>Try not to get distracted by the really cool kids like <a href="https://console.bluemix.net/developer/watson/dashboard" target="_blank">Watson</a> just for the moment: what we want is an <strong>SDK for Node.js </strong>Cloud Foundry App. Click on it to get the configuration page.</p>
+<p><img style="max-width: 624.00px" src="https://lh5.googleusercontent.com/Vt-24mRrjyRyn6cpXv-lFZq6wzYcT-mFjAEqMrAUp0vjgRKo4spCIN4d3PrHD7hTbvFUR4tMOQeSywJCt5Apnxas6EFwmv2ETMY_XgYz5tdQ2WDq8-nthIQPLPrmZF_4rHStef2S"></p>
+<p>Let&#39;s take a closer look:</p>
+<p><strong>App name</strong>: Set this as <strong>loopstore</strong> to match the rest of the tutorial instructions, or chose your own name: you will configure the CLI to deploy to an app instance with this name.</p>
+<p><strong>Domain</strong>: When you deploy with the CLI, this is the value you will need to give as the <strong>API Endpoint</strong></p>
+<p><strong>Host name: </strong>Together with the <strong>Domain</strong> this forms the URL our LoopStore will be served from. You will need to choose something unique. You don&#39;t need to know this to configure the CLI, just to connect once the app is up and running. In the tutorial we&#39;ll refer it it as <strong>[my-hostname].</strong></p>
+<p><strong>Choose a region to deploy in</strong>: This will default to the region you chose when you signed up.</p>
+<p><strong>Choose an organisation and space</strong>: These will be your IBM id <strong>email address </strong>and the <strong>dev </strong>space, needed to configure the CLI as we noted on the Dashboard <a href="https://docs.google.com/document/d/1RRRanau_61ObIcrB7pJz1PBWOIFDzPQqI4mHfD9uvgo/edit#bookmark=id.331i1inssg0" target="_blank">previously</a>.</p>
+<p><strong>Pricing Plans</strong>: As promised, we&#39;re working with the worry free Lite tier: there&#39;s no possibility the app will generate charges. </p>
+<p>We&#39;ve got a total of 256MB of memory which we could share with other other app instances but for now we may as well just give our LoopStore the full quota, so select the <strong>256MB option</strong>.</p>
+<p>That&#39;s about it! </p>
+<p>Press create and (provided <strong>[my-hostname]</strong> is available) the platform will start spinning up the Node.js environment. </p>
+<p>It&#39;s an asynchronous process and can take a few minutes, so you can carry on to the next step of setting up a Cloudant service to store or data. </p>
+<p>If you wait a while or come back to this page later, you should see that the app is &#34;awake&#34;. We can also check the status of the app using the CLI as we&#39;ll see later.</p>
+<p><img style="max-width: 624.00px" src="https://lh6.googleusercontent.com/lzTaaFFZQNghSfEtwHQuM2HyQjdR-XqdykYO8sJt5teHYu12bacmbN4ne606zJIRFWBsolP5lBjPzDrOaZ4viT8Jvj9p4DLSbdPYzBjLwLeSgDLzckCfQTUVfoXG454Byh4R--hI"></p>
+<p>Configure the DataSource in data.db to use loopback-connector-cloudant</p>
+<p>Deploy LoopStore to the cloud!</p>
+<p>Test your deployment</p>
+<p>Setting up a local Cloudant database</p>
+<p>Considerations for production deployment</p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Set up a Cloudant database and note the connection string" duration="1">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install &amp; configure the ?IBM Cloud CLI" duration="1">
+        <p>We need to download either the full IBM Cloud CLI or the  <a href="https://docs.cloudfoundry.org/cf-cli/install-go-cli.html" target="_blank">Cloud Foundry CLI</a></p>
+<p><a href="https://docs.cloudfoundry.org/cf-cli/install-go-cli.html" target="_blank">Cloud Foundry CLI</a></p>
+<ul>
+<li>Login (set org, space, API endpoint)</li>
+<li>Get app manifest</li>
+<li>Inspect service status</li>
+</ul>
+<p>That&#39;s our IBM Cloud environment and database all set up and we&#39;re almost ready to deploy, but we need to make a few changes to our LoopStore&#39;s app code first. </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Manage Cloud Foundry environment variables with cfenv" duration="1">
+        <p>Add </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure the DataSource in data.db to use loopback-connector-cloudant" duration="1">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy LoopStore to the cloud!" duration="1">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Test your deployment" duration="1">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setting up a local Cloudant database" duration="1">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Considerations for production deployment" duration="1">
+        
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49880327-14', 'auto');
+
+    (function() {
+      var gaCodelab = '';
+      if (gaCodelab) {
+        ga('create', gaCodelab, 'auto', {name: 'codelab'});
+      }
+
+      var gaView;
+      var parts = location.search.substring(1).split('&');
+      for (var i = 0; i < parts.length; i++) {
+        var param = parts[i].split('=');
+        if (param[0] === 'viewga') {
+          gaView = param[1];
+          break;
+        }
+      }
+      if (gaView && gaView !== gaCodelab) {
+        ga('create', gaView, 'auto', {name: 'view'});
+      }
+    })();
+  </script>
+
+</body>
+</html>
