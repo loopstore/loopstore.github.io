@@ -4,7 +4,7 @@
   "format": "html",
   "prefix": "../",
   "mainga": "UA-49880327-14",
-  "updated": "2018-12-02T10:02:27Z",
+  "updated": "2018-12-02T10:39:19Z",
   "id": "how-to-deploy-to-ibm-cloud",
   "duration": 23,
   "title": "Deploy your LoopStore to IBM Cloud free tier",
@@ -22,5 +22,6 @@
     "web"
   ],
   "feedback": "https://github.com/loopstore/loopstore-tutorial-v4/issues",
+  "ga": "UA-130203449-1",
   "url": "how-to-deploy-to-ibm-cloud"
 }

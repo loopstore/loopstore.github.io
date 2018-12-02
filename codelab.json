@@ -4,7 +4,7 @@
   "format": "html",
   "prefix": "./",
   "mainga": "UA-49880327-14",
-  "updated": "2018-12-02T10:05:56Z",
+  "updated": "2018-12-02T10:37:36Z",
   "id": "",
   "duration": 61,
   "title": "Loopstore: Building a store with LoopBack4",
@@ -29,5 +29,6 @@
     "useridnw01"
   ],
   "feedback": "https://github.com/loopstore/loopstore/issues",
+  "ga": "UA-130203449-1",
   "url": ""
 }
