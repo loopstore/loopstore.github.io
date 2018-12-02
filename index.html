@@ -7,8 +7,8 @@
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
   <title>Loopstore: Building a store with LoopBack4</title>
-  <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="./elements/codelab.html">
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../elements/codelab.html">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <style is="custom-style">
     body {
@@ -21,8 +21,602 @@
 <body unresolved class="fullbleed">
 
   <google-codelab title="Loopstore: Building a store with LoopBack4"
-                  environment="web"
+                  environment="gh-pages"
                   feedback-link="https://github.com/loopstore/loopstore/issues">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <p>Link to deploying</p>
+<h2><strong>A tutorial for building an ecommerce store backend with </strong><a href="https://v4.loopback.io/" target="_blank"><strong>LoopBack 4</strong></a></h2>
+<p><em>Purpose &amp; Current Status</em> This repo was created 25 Nov 18 so there&#39;s nothing really here at the moment but there is <a href="https://github.com/loopstore/loopstore-tutorial-v4/issues/13" target="_blank">WORK IN PROGRESS</a>. Please read the rest of this page for an outine of what&#39;s to come or take a look in the repo&#39;s <a href="https://github.com/loopstore/loopstore-tutorial-v4/issues/" target="_blank">Issues</a>. There is a test build of some tutorial content as a codelab hosted on the repos GH Pages here: <a href="https://loopstore.github.io/loopstore/tutorial/index.html" target="_blank">https://loopstore.github.io/loopstore/tutorial/index.html</a></p>
+<p><em>Get Started</em></p>
+<p><em>I&#39;m a developer using </em><a href="https://nodejs.org/" target="_blank"><em>Node.js</em></a><em> ^8.9.0</em></p>
+<p>Then you might want to just get started:</p>
+<p>Until we get things set up here, head over to the <a href="https://github.com/strongloop/loopback4-example-shopping" target="_blank">https://github.com/strongloop/loopback4-example-shopping repo</a> and follow the instructions:</p>
+<p><code>git clone https://github.com/strongloop/loopback4-example-shopping.git<br>cd loopback4-example-shopping<br>npm i<br>npm start<br></code></p>
+<p><em>Learn More</em></p>
+<p><em>What is LoopBack?</em></p>
+<p>LoopBack <a href="https://strongloop.com/strongblog/loopback-4-ga" target="_blank">version 4</a> is an easily extended <a href="https://github.com/strongloop/loopback-next" target="_blank">open-source</a> <a href="https://nodejs.org/" target="_blank">Node.js</a> framework for <a href="https://loopback.io/doc/en/lb4/Crafting-LoopBack-4.html#background" target="_blank">rapidly creating API based microservices which can be generated from existing backend data sources</a>.</p>
+<p><em>What is LoopStore?</em></p>
+<p><a href="https://github.com/loopstore/loopstore" target="_blank">LoopStore</a> is public fork on GitHub of (<a href="https://github.com/strongloop/loopback4-example-shopping" target="_blank">https://github.com/strongloop/loopback4-example-shopping</a>), which was created and is manintained by <a href="https://github.com/strongloop" target="_blank">Strongloop</a>. <a href="https://github.com/loopstore" target="_blank">LoopStore</a> is not officially connected with the <a href="https://github.com/strongloop" target="_blank">Strongloop</a> organisation.</p>
+<p><em>What is LoopStore Tutorial</em></p>
+<p>LoopStore Tutorial demonsrates how LoopBack could be used to create an API based backend for a functional ecommerce store, our <a href="https://github.com/loopstore/loopstore" target="_blank">LoopStore</a>. We&#39;re going to be selling downloadable Loops of anything, well, Loopy!</p>
+<p>We&#39;ll be quickly scaffolding the key components of our app using LoopBack&#39;s generators, connecting it up to a database and other external services like card payments, adding some authentication and deploying it all to the cloud using free-tier services.</p>
+<p>We&#39;ll be able to manage our Product and Cutomer data using a REST API, provide customers with a ShoppingCart, accept payment for an Order and give the customer authorised access to their downloads once they&#39;ve paid.</p>
+<p>Of course this is just a tutorial, so to keep it simple we won&#39;t be implementing everything you would need to for a proper commercial store.</p>
+<p>The real aim of this tutorial is to:</p>
+<ul>
+<li>Introduce <a href="https://loopback.io/doc/en/lb4/Concepts.html" target="_blank">Key Concepts</a> in LoopBack 4</li>
+<li>Provide How-Tos: examples of how to acheive certain tasks such as <a href="https://loopback.io/doc/en/lb4/Database-migrations.html" target="_blank">migrating existing data</a> or <a href="https://loopback.io/doc/en/lb4/exposing-graphql-apis.html" target="_blank">exposing your APIs as GraphQL</a></li>
+<li>Examine <a href="https://loopback.io/doc/en/lb4/Best-practices.html" target="_blank">Best Practices</a> for working with LoopBack.</li>
+</ul>
+<p>We&#39;ll be taking it step-by-step and just covering a few Key Concepts, How-Tos and Best Practices at a time. You can download the code for each tutorial, or jump straight to <a href="https://github.com/loopstore/loopstore-tutorial-v4/blob/master" target="_blank">the end</a></p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install the LoopBack4 CLI and create the LoopStore app" duration="2">
+        <aside class="special"><p><strong>We&#39;re assuming:</strong></p>
+<p>You&#39;re running Node.js in a unix environment. In the tutorial <strong>Reference Section</strong> you can find out how to Install Node.js and npm with Node Version Manager. </p>
+</aside>
+<h2 class="checklist">What you&#39;ll learn</h2>
+<ul class="checklist">
+<li><strong>How to:</strong> check your <a href="https://nodejs.org" target="_blank">Node.js</a> environment supports <a href="https://v4.loopback.io/" target="_blank">LoopBack 4</a></li>
+<li><strong>How to</strong>: install the <a href="https://v4.loopback.io/" target="_blank">LoopBack 4</a> CLI</li>
+<li><strong>How to</strong>: create a <a href="https://v4.loopback.io/" target="_blank">LoopBack 4</a> Application using the CLI Generator</li>
+<li><strong>How to</strong>: Build and run the app</li>
+<li><strong>Key Concepts</strong>: CLI, Application, Generator, Build</li>
+</ul>
+<h2>Instructions</h2>
+<h3>Check your node version</h3>
+<pre>node -v</pre>
+<p>LoopBack 4 currently requires Node.js <strong>version 8.9.0 or above</strong>.</p>
+<h3>Install the LoopBack 4 CLI</h3>
+<pre>npm i -g @loopback/cli</pre>
+<h3>Start the app generator using the &#34;lb4 app&#34; command</h3>
+<p><a href="https://github.com/strongloop/loopback-next/blob/master/packages/cli/README.md" target="_blank">see all CLI options</a></p>
+<pre>lb4 app</pre>
+<p>For &#34;Project name&#34; enter &#34;loopstore&#34;</p>
+<pre>loopstore</pre>
+<p>For &#34;Project description&#34; enter &#34;Building a store with LoopBack 4&#34;</p>
+<pre>Building a store with LoopBack 4</pre>
+<p>For &#34;Project root directory&#34; enter &#34;loopstore&#34;</p>
+<pre>loopstore</pre>
+<aside class="special"><p><strong>Hint</strong></p>
+<p>This is the name of the directory which will be created below your current working directory to store our LoopStore&#39;s code package. This will also be the package name contained in the app package.json file.</p>
+</aside>
+<p><strong>Caution!</strong></p>
+<p>You can&#39;t enter a path here: see <a href="https://github.com/strongloop/loopback-next/issues/2092" target="_blank">this Issue</a>.</p>
+<p>For &#34;Application class name&#34; enter &#34;LoopstoreApplication&#34;</p>
+<pre>LoopstoreApplication</pre>
+<p>&#34;What features and services do you want to enable?&#34;</p>
+<p><strong>Leave all the features enabled!</strong></p>
+<aside class="special"><p><strong>Going deeper 🤓</strong></p>
+<p>Here&#39;s what we enabling: tslint, prettier, mocha, loopbackBuild, vscode, repositories, services.</p>
+<p>We&#39;ll be looking into what these all mean later in the tutorial.</p>
+</aside>
+<h3>Generate the LoopStore app</h3>
+<p>Hit <strong>Enter</strong> to create the LoopStore!</p>
+<p>After a few seconds, the code for the LoopStore app should be generated in in a subfolder called loopstore.</p>
+<h3>Change into the app code directory and start the app</h3>
+<pre>cd loopstore
+npm start</pre>
+<p>NPM will run the build scripts in the &lt;walkthrough-editor-open-file  filePath=&#34;test-cloudshell-tutorial/loopstore/package.json&#34; text=&#34;&#34;&gt;package.json&lt;/walkthrough-editor-open-file&gt; file</p>
+<pre><code>&gt; loopstore@1.0.0 prestart /home/nigel/loopstore/loopstore
+&gt; npm run build
+&gt; loopstore@1.0.0 build /home/nigel/loopstore/loopstore
+&gt; lb-tsc es2017 --outDir dist&gt; loopstore@1.0.0 start /home/nigel/loopstore/loopstore</code></pre>
+<aside class="special"><p><strong>Going deeper</strong></p>
+<p>If you look closely the <strong>npm start</strong> script actually runs a <strong>prestart</strong> script, which runs the <strong>build </strong>script before finally serving the app. We&#39;ll have to change some of these settings and look deeper into the LoopBack <strong>Build </strong>package later.</p>
+</aside>
+<h3>That&#39;s it!</h3>
+<pre><code>&gt; node .Server is running at http://127.0.0.1:3000
+Try http://127.0.0.1:3000/ping</code></pre>
+<p>Our LoopStore is up and running! (kind of). It&#39;s pretty unlikely you won&#39;t have checked out those links in the browser yet but we&#39;ll be having a look at what exactly we&#39;ve created and how it works next up...</p>
+<h2 class="faq">Frequently Asked Questions</h2>
+<ul class="faq">
+<li><a href="https://github.com/strongloop/loopback-next/issues" target="_blank">LoopBack 4 Issues on GitHub</a></li>
+</ul>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Exploring the generated OpenAPI v3 Schema" duration="10">
+        <p><a href="https://lb4.eu-gb.mybluemix.net/openapi.json" target="_blank">https://lb4.eu-gb.mybluemix.net/openapi.json</a></p>
+<p><a href="https://editor.swagger.io/" target="_blank">https://editor.swagger.io/</a></p>
+<p><img style="max-width: 624.00px" src="https://lh6.googleusercontent.com/P3bfM6r1KA1oGrSXIW44POHSIT1jAVJ-58w8_jMhKJ7nXpZ8EYkU0iSoxIVBPMFjWUIy-qaTjs6lBWGe7hcltf1JmYJkgGD530cD62N0aEsyN2jCgkoSG0C_s9tgOTHvbCyx8Fgo"><img style="max-width: 174.00px" src="https://lh5.googleusercontent.com/QyOgHwLuUrmhzM9LWwggb6kEQWcdh7LJIjQ1Jg-o_PXOqK0Y-BnrVy7mY_waRMlC8kOgnOau2U1Jd_0wBss2-wFdq3aT1HZWE4MUatFyM6yaC76v8xsfsswxxis_KP9piwPJh2UU"></p>
+<p>Errors</p>
+<p>Hide</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 13</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 13</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should have required property &#39;examples&#39;</p>
+<p>missingProperty: examples</p>
+<p>Jump to line 16</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 16</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 17</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 17</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;headers&#39;]</p>
+<p>should NOT have additional properties</p>
+<p>additionalProperty: patternProperties</p>
+<p>Jump to line 26</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;headers&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 26</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;headers&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 26</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 133</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 133</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should have required property &#39;examples&#39;</p>
+<p>missingProperty: examples</p>
+<p>Jump to line 136</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 136</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 137</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 137</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;count&#39;]</p>
+<p>should be object</p>
+<p>Jump to line 140</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 187</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 187</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should have required property &#39;examples&#39;</p>
+<p>missingProperty: examples</p>
+<p>Jump to line 190</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 190</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 191</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 191</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;count&#39;]</p>
+<p>should be object</p>
+<p>Jump to line 194</p>
+<p><img style="max-width: 610.00px" src="https://lh3.googleusercontent.com/qlDuzcyrBZN-AjNstq_D4_VLSTNTaVxy5D570D3LwMwRdg7GG3WlBhZZ2Ga0urCf3yd6XjXEelK9KDud4JoDC5DGDR-bQrMmKKAcC1sP0XPWi5D74ZOfayXTjwb6yUj2qKMK2kn0"></p>
+<p><img style="max-width: 624.00px" src="https://lh4.googleusercontent.com/qrhcO69fkWOyxaVjNuT48kPSXZkNCxSKBRPKw_wCAkY9FtcCbcMdg_tXreTfnhkOVeOcKH7nyY9qSccijFZcG8Dtgxs2u9ND4iR0nptrWSUudrIXxvBiizqTHfsGedttBq6DpATA"></p>
+<p>{</p>
+<p>  &#34;email&#34;: &#34;string&#34;,</p>
+<p>  &#34;password&#34;: &#34;string&#34;,</p>
+<p>  &#34;firstname&#34;: &#34;string&#34;</p>
+<p>}</p>
+<p>-----------------</p>
+<h4><strong>Server response</strong></h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Code</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Details</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>404</p>
+<p><em>Undocumented</em></p>
+</td><td colspan="1" rowspan="1"><p>Error: Not Found</p>
+<h5><strong>Response body</strong></h5>
+<p>Download</p>
+<p>&lt;html&gt;<br>&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;<br>&lt;body bgcolor=&#34;white&#34;&gt;<br>&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;<br>&lt;hr&gt;&lt;center&gt;nginx/1.10.3&lt;/center&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br></p>
+<h5><strong>Response headers</strong></h5>
+<p>connection: close content-length: 571 content-type: text/html date: Sat, 01 Dec 2018 02:28:37 GMT server: nginx/1.10.3</p>
+</td></tr>
+</table>
+<h4><strong>Responses</strong></h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Code</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Description</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Links</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>200</p>
+</td><td colspan="1" rowspan="1"><p><em>Return value of UserController.create</em></p>
+</td><td colspan="1" rowspan="1"><p><em>No links</em></p>
+</td></tr>
+</table>
+<h4><strong>Extensions</strong></h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Field</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Value</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>x-controller-name</p>
+</td><td colspan="1" rowspan="1"><p>&#34;UserController&#34;</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>x-operation-name</p>
+</td><td colspan="1" rowspan="1"><p>&#34;create&#34;</p>
+</td></tr>
+</table>
+<p>----------------</p>
+<h4><strong>Curl</strong></h4>
+<h4><strong>Request URL</strong></h4>
+<p>https://editor.swagger.io/users</p>
+<p>ERROR URL OT IN API DOC</p>
+<pre>nigel@cloudshell:~$ curl -X POST &#34;https://3000-dot-4651419-dot-devshell.appspot.com/users&#34; -H &#34;accept: */*&#34; -H &#34;Content-Type: application/json&#34; -d &#34;{ \&#34;email\&#34;: \&#34;loopstore@cloudwheels.net\&#34; \&#34;firstname\&#34;: \&#34;Nigel\&#34;}&#34;
+</pre>
+<p>Unexpected token e in JSON at position 2&#34;</p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Generating a GraphQL Schema for the API with OAS Graph" duration="10">
+        <p><a href="https://lb4.eu-gb.mybluemix.net/openapi.json" target="_blank">https://lb4.eu-gb.mybluemix.net/openapi.json</a></p>
+<p><a href="https://editor.swagger.io/" target="_blank">https://editor.swagger.io/</a></p>
+<p><img style="max-width: 624.00px" src="https://lh6.googleusercontent.com/P3bfM6r1KA1oGrSXIW44POHSIT1jAVJ-58w8_jMhKJ7nXpZ8EYkU0iSoxIVBPMFjWUIy-qaTjs6lBWGe7hcltf1JmYJkgGD530cD62N0aEsyN2jCgkoSG0C_s9tgOTHvbCyx8Fgo"><img style="max-width: 174.00px" src="https://lh5.googleusercontent.com/QyOgHwLuUrmhzM9LWwggb6kEQWcdh7LJIjQ1Jg-o_PXOqK0Y-BnrVy7mY_waRMlC8kOgnOau2U1Jd_0wBss2-wFdq3aT1HZWE4MUatFyM6yaC76v8xsfsswxxis_KP9piwPJh2UU"></p>
+<p>Errors</p>
+<p>Hide</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 13</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 13</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should have required property &#39;examples&#39;</p>
+<p>missingProperty: examples</p>
+<p>Jump to line 16</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 16</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 17</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 17</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;headers&#39;]</p>
+<p>should NOT have additional properties</p>
+<p>additionalProperty: patternProperties</p>
+<p>Jump to line 26</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;headers&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 26</p>
+<p>Schema error at paths[&#39;/ping&#39;].get.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;headers&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 26</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 133</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 133</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should have required property &#39;examples&#39;</p>
+<p>missingProperty: examples</p>
+<p>Jump to line 136</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 136</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 137</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 137</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].patch.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;count&#39;]</p>
+<p>should be object</p>
+<p>Jump to line 140</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;]</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 187</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 187</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should have required property &#39;examples&#39;</p>
+<p>missingProperty: examples</p>
+<p>Jump to line 190</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;]</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 190</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should have required property &#39;$ref&#39;</p>
+<p>missingProperty: $ref</p>
+<p>Jump to line 191</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema</p>
+<p>should match exactly one schema in oneOf</p>
+<p>Jump to line 191</p>
+<p>Schema error at paths[&#39;/users/{userId}/orders&#39;].delete.responses[&#39;200&#39;].content[&#39;application/json&#39;].schema.properties[&#39;count&#39;]</p>
+<p>should be object</p>
+<p>Jump to line 194</p>
+<p><img style="max-width: 610.00px" src="https://lh3.googleusercontent.com/qlDuzcyrBZN-AjNstq_D4_VLSTNTaVxy5D570D3LwMwRdg7GG3WlBhZZ2Ga0urCf3yd6XjXEelK9KDud4JoDC5DGDR-bQrMmKKAcC1sP0XPWi5D74ZOfayXTjwb6yUj2qKMK2kn0"></p>
+<p><img style="max-width: 624.00px" src="https://lh4.googleusercontent.com/qrhcO69fkWOyxaVjNuT48kPSXZkNCxSKBRPKw_wCAkY9FtcCbcMdg_tXreTfnhkOVeOcKH7nyY9qSccijFZcG8Dtgxs2u9ND4iR0nptrWSUudrIXxvBiizqTHfsGedttBq6DpATA"></p>
+<p>{</p>
+<p>  &#34;email&#34;: &#34;string&#34;,</p>
+<p>  &#34;password&#34;: &#34;string&#34;,</p>
+<p>  &#34;firstname&#34;: &#34;string&#34;</p>
+<p>}</p>
+<p>-----------------</p>
+<h4><strong>Server response</strong></h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Code</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Details</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>404</p>
+<p><em>Undocumented</em></p>
+</td><td colspan="1" rowspan="1"><p>Error: Not Found</p>
+<h5><strong>Response body</strong></h5>
+<p>Download</p>
+<p>&lt;html&gt;<br>&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;<br>&lt;body bgcolor=&#34;white&#34;&gt;<br>&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;<br>&lt;hr&gt;&lt;center&gt;nginx/1.10.3&lt;/center&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br>&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;<br></p>
+<h5><strong>Response headers</strong></h5>
+<p>connection: close content-length: 571 content-type: text/html date: Sat, 01 Dec 2018 02:28:37 GMT server: nginx/1.10.3</p>
+</td></tr>
+</table>
+<h4><strong>Responses</strong></h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Code</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Description</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Links</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>200</p>
+</td><td colspan="1" rowspan="1"><p><em>Return value of UserController.create</em></p>
+</td><td colspan="1" rowspan="1"><p><em>No links</em></p>
+</td></tr>
+</table>
+<h4><strong>Extensions</strong></h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Field</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>Value</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>x-controller-name</p>
+</td><td colspan="1" rowspan="1"><p>&#34;UserController&#34;</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>x-operation-name</p>
+</td><td colspan="1" rowspan="1"><p>&#34;create&#34;</p>
+</td></tr>
+</table>
+<p>----------------</p>
+<h4><strong>Curl</strong></h4>
+<h4><strong>Request URL</strong></h4>
+<p>https://editor.swagger.io/users</p>
+<p>ERROR URL OT IN API DOC</p>
+<pre>nigel@cloudshell:~$ curl -X POST &#34;https://3000-dot-4651419-dot-devshell.appspot.com/users&#34; -H &#34;accept: */*&#34; -H &#34;Content-Type: application/json&#34; -d &#34;{ \&#34;email\&#34;: \&#34;loopstore@cloudwheels.net\&#34; \&#34;firstname\&#34;: \&#34;Nigel\&#34;}&#34;
+</pre>
+<p>Unexpected token e in JSON at position 2&#34;</p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Preparing the App for Deployment" duration="8">
+        <ul>
+<li>Changes to build scripts</li>
+</ul>
+<p>[[<strong>import </strong>]]</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploying to IBM Cloud Free Tier with the Cloudant database" duration="10">
+        <p><a href="https://console.cloud.google.com/cloudshell/open?tutorial=loopstore/tutorial/howto/deploy-to-ibm-cloud/tutorial-gcs.md" target="_blank">Deploying the LoopStore to IBM Cloud Free Tier</a></p>
+<pre>teachme ~/loopstore/tutorial/howto/deploy-to-ibm-cloud/tutorial-gcs.md
+</pre>
+<h2 class="checklist">What you&#39;ll learn</h2>
+<ul class="checklist">
+<li>About IBM Cloud and free tier services</li>
+<li>Creating an IBM id </li>
+<li>Setting up a Node.js SDK instance in Cloud Foundry</li>
+<li>Setting up the Cloudant document database service</li>
+<li>Managing Environment Variables and configuring the LoopStore app to use them</li>
+<li>Connecting to the Cloudant database with LoopBack DataSources and Connectors</li>
+<li>Deploying the LoopStore app using the IBM Cloud CLI</li>
+<li>Setting up a local Cloudant database</li>
+<li>Considerations for Production Deployment</li>
+</ul>
+
+<h2>Introduction</h2>
+<p>In this HOW-TO section we&#39;ll be creating a free tier IBM Cloud account and setting up Cloud Foundry app instance for deploying our LoopStore.</p>
+<p>We&#39;ll install and configure the IBM Cloud CLI for deploying our app..</p>
+<p>We&#39;ll also set up a Cloudant database service and update the code so we can use it to persist data for our <a href="https://loopback.io/doc/en/lb4/Model.html" target="_blank">Models</a>. </p>
+<h2>Why use IBM Cloud?</h2>
+<p>LoopBack apps can be hosted in any <a href="https://nodejs.org/" target="_blank">Node.js</a> environment and connect to a wide variety of data  sources. </p>
+<p><a href="https://www.ibm.com/cloud/" target="_blank">IBM Cloud</a> is a convenient option for getting our LoopStore up and running on the web. It offers full-stack cloud platform with over 170 products and services. It also offers a useful free tier to give developers a chance to explore, with no need to enter credit card details.</p>
+<p>All you really need is an email address to confirm your registration, a first and last name and your region to create an IBM id.</p>
+
+<h2>TLDR</h2>
+<h2>Sign up for IBM Cloud and login to the console</h2>
+<h2>Create a Node.js SDK app instance on Cloud Foundry</h2>
+<p>You can use the <a href="https://console.bluemix.net/dashboard" target="_blank">console</a> side menu to jump to the Cloud Foundry overview page. Our LoopStore will live in the <a href="https://console.bluemix.net/dashboard/cloudfoundry?filter=cf_public" target="_blank">Public</a> section. </p>
+<p>Click on <a href="https://console.bluemix.net/catalog/?search=runtime" target="_blank">Create Resource</a> </p>
+<p>You&#39;ll end on the <a href="https://console.bluemix.net/catalog/" target="_blank">Catalog</a> </p>
+<p><strong>App name</strong>: Set this as <strong>loopstore</strong> to match the rest of the tutorial instructions, or chose your own name: you will configure the CLI to deploy to an app instance with this name.</p>
+<p><strong>Domain</strong>: When you deploy with the CLI, this is the value you will need to give as the <strong>API Endpoint</strong></p>
+<p><strong>Host name: </strong>Together with the <strong>Domain</strong> this forms the URL our LoopStore will be served from. You will need to choose something unique. You don&#39;t need to know this to configure the CLI, just to connect once the app is up and running. In the tutorial we&#39;ll refer it it as <strong>[my-hostname].</strong></p>
+<p><strong>Choose a region to deploy in</strong>: This will default to the region you chose when you signed up.</p>
+<p><strong>Choose an organisation and space</strong>: These will be your IBM id <strong>email address </strong>and the <strong>dev </strong>space, needed to configure the CLI as we noted on the Dashboard previously.</p>
+<p><strong>Pricing Plans</strong>: As promised, we&#39;re working with the worry free Lite tier: there&#39;s no possibility the app will generate charges. </p>
+<p>We&#39;ve got a total of 256MB of memory which we could share with other other app instances but for now we may as well just give our LoopStore the full quota, so select the <strong>256MB option</strong>.</p>
+<p>That&#39;s about it! </p>
+<p>Press create and (provided <strong>[my-hostname]</strong> is available) the platform will start spinning up the Node.js environment. </p>
+<h2>Set up a Cloudant database and note the connection string</h2>
+<h2>Install &amp; configure the ?IBM Cloud CLI</h2>
+<ul>
+<li>Login (set org, space, API endpoint)</li>
+<li>Get app manifest</li>
+<li>Inspect service status</li>
+</ul>
+<h2>Manage Cloud Foundry environment variables with cfenv  </h2>
+<h3><code>npm i cfenv --save</code></h3>
+<h2>Configure the DataSource in data.db to use loopback-connector-cloudant</h2>
+<h2>Deploy LoopStore to the cloud!</h2>
+<h2>Test your deployment</h2>
+<h2>Setting up a local Cloudant database</h2>
+<h2>Considerations for production deployment</h2>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploying to Google Cloud Free Tier with the FireStore database" duration="10">
+        <h2>Using Google Cloud Source Repositories</h2>
+<p><a href="https://cloud.google.com/sdk/gcloud/reference/source/repos/create" target="_blank">https://cloud.google.com/sdk/gcloud/reference/source/repos/create</a></p>
+<h3>Set your current project with gcloud projects list</h3>
+<h3><code>gcloud projects list</code></h3>
+<h3><code>gcloud config set project loopstore-0000001</code></h3>
+<p>Create a cloud source repository called <strong>loopstore</strong></p>
+<p><strong>gcloud source repos create loopstore</strong></p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploying to Google Cloud Free Tier with the FireStore database" duration="10">
+        <p>How To: Deploy to Google Cloud with Firebase Authentication, Firestore &amp; Cloud Functions </p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Summary</strong></p>
+</td><td colspan="1" rowspan="1"><p>LoopStore - Building a store with LoopBack 4 tutorial from https://github.com/loopstore/loopstore</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>URL</strong></p>
+</td><td colspan="1" rowspan="1"><p>how-to-firebase-firestore-app-engine</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Category</strong></p>
+</td><td colspan="1" rowspan="1"><p>LoopBack, Google Cloud Shell, Firebase, Firestore, Cloud Functions, App Engine, Cloud Data Store</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Environment</strong></p>
+</td><td colspan="1" rowspan="1"><p>Gcs, web</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Status</strong></p>
+</td><td colspan="1" rowspan="1"><p>Draft</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Feedback Link</strong></p>
+</td><td colspan="1" rowspan="1"><p>https://github.com/loopstore/loopstore/issues</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><strong>Author</strong></p>
+</td><td colspan="1" rowspan="1"><p>LoopStore</p>
+</td></tr>
+</table>
+<p>Introduction</p>
+<p>What you&#39;ll learn</p>
+<p>What you&#39;ll learn</p>
+<p>What we&#39;ve covered</p>
+<p>Frequently Asked Questions</p>
+<p>index.html</p>
+<p>Why use IBM Cloud?</p>
+<p>Introduction</p>
+<p>(Move to steps) </p>
+<h2 class="checklist">What you&#39;ll learn</h2>
+<ul class="checklist">
+<li><strong>How to:</strong> set up project on the Firebase Free Spark Tier</li>
+<li><strong>How to</strong>: Add a Cloud Firestore database</li>
+<li><strong>How to</strong>: Configure the LoopStore app to use the loopback-connector-firestore to access the database.</li>
+<li><strong>How to</strong>: Use Firebase Cloud Functions to perform tasks without running a server</li>
+<li><strong>How To</strong> Manage User Authentication and Authorisation using Firebase Authentication</li>
+<li><strong>How To</strong> Manage Environment Variables for Deploying the LoopStore to Google Cloud and other platform services. These are the likes of credentials, runtime configuration such a port numbers or whether we are running a Production or Development build. </li>
+<li><strong>How To</strong> Use the Google Cloud SDK to manage services across the platform</li>
+<li><strong>How To</strong> Configure Service Accounts to work securely with the LoopStore app and FireStore database </li>
+<li><strong>How To: </strong>Deploy the LoopStore App to a Node.js instance on Google Cloud App Engine </li>
+<li><strong>Key Concepts</strong>: CLI, DataStore, Generator, Build, Deploy, Auth</li>
+</ul>
+<p>Set up a Firebase project and install the CLI </p>
+<aside class="special"><p><strong>Bargain!</strong></p>
+<p>We&#39;re going to be using the Firebase Free Spark Tier with this project. We recommend creating a GMail account for this tutorial and enabling all services under this account.</p>
+</aside>
+<p>Using Cloud Data Store to securely manage Environment Variables</p>
+<p>Deploying the LoopStore to Google App Engine Free Tier</p>
+<p>Reference and Further Reading</p>
+<p>Common Errors and Problems</p>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Reference and Further Reading" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install Node.js and npm with Node Version Manager" duration="0">
+        <aside class="special"><p><strong>We&#39;re assuming:</strong></p>
+<p>You&#39;re running a recent version of Linux or MacOS and comfortable with using the command line in a  <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">bash shell</a>. </p>
+</aside>
+<h2 class="checklist">What you&#39;ll learn</h2>
+<ul class="checklist">
+<li><strong>How to:</strong> install and manage the  <a href="https://nodejs.org" target="_blank">Node.js</a> environment and <a href="https://www.npmjs.com" target="_blank">Node Package Manager (npm)</a> using <a href="https://github.com/creationix/nvm" target="_blank">Node Version Manager (nvm)</a></li>
+<li><strong>How to</strong>: install and use different versions </li>
+</ul>
+<h2>Instructions</h2>
+<h3>Check the <a href="https://github.com/creationix/nvm" target="_blank">creationix/nvm</a> GitHub repo for <a href="https://github.com/strongloop/loopback-next/blob/master/packages/cli/README.md" target="_blank">latest nvm release</a></h3>
+<p>Here we&#39;ll be using <a href="https://github.com/creationix/nvm/releases/tag/v0.33.11" target="_blank">v0.33.11</a> </p>
+<h3>Download the nvm install script via cURL</h3>
+<pre>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash</pre>
+<h3>Check nvm is installed by running <strong>nvm --version</strong></h3>
+<pre>nvm --version</pre>
+<p>nvm --version<br>0.33.11</p>
+<h3>For <strong>Description</strong> enter <strong>A store built with LoopBack 4</strong></h3>
+<pre>A store built with LoopBack 4</pre>
+<h3>For <strong>project directory</strong> enter <strong>loopstore</strong></h3>
+<p>loopstore</p>
+<aside class="special"><p><strong>Best Practices</strong></p>
+<p>This is the name of the directory which will be created below your current working directory to store our LoopStore&#39;s code</p>
+</aside>
+<h3>Change into the package directory</h3>
+<p>cd package</p>
+<h3>Start the app </h3>
+<h3>Using npm start</h3>
+<p>npm start</p>
+<h2 class="faq">Frequently Asked Questions</h2>
+<ul class="faq">
+<li><a href="https://stackoverflow.com/search?q=NVM" target="_blank">nvm questions on Stack Overflow</a></li>
+</ul>
+
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="LoopBack 4 Best Practices" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="LoopBack 4 Key Concepts" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="All LoopStore How-To Labs" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Modifying this Tutorial" duration="0">
+        <p>[[<strong>import</strong>]]</p>
+
+
+      </google-codelab-step>
     
   </google-codelab>
 
