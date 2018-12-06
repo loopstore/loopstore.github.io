@@ -1,0 +1,1 @@
+{"count":5,"steps":[{"instruction":"Enter npm i -g @loopback/cli to LoopBack4 CLI","cmd":"npm i -g @loopback/cli"},{"instruction":"Enter lb4 app to start the Application Generator","cmd":"lb4 app"}]}
