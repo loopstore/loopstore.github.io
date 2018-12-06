@@ -1,1 +1,47 @@
-{"count":5,"steps":[{"instruction":"Enter npm i -g @loopback/cli to LoopBack4 CLI","cmd":"npm i -g @loopback/cli"},{"instruction":"Enter lb4 app to start the Application Generator","cmd":"lb4 app"}]}
+{
+ "title":"LoopStore: Building a Store with LoopBack 4",
+ "steps":[
+   {
+     "title":"step1",
+     "code-step-count":5,
+     "code-steps":[
+       {
+         "instruction":
+         "Enter npm i -g @loopback/cli to LoopBack4 CLI",
+
+         "cmd":
+         "npm i -g @loopback/cli"
+        },
+        {
+          "instruction":
+         "Enter lb4 app to start the Application Generator",
+
+          "cmd":
+          "lb4 app"
+        }
+      ]
+   },
+    {
+     "title":"step2",
+     "code-step-count":2,
+     "code-steps":[
+       {
+         "instruction":
+         "Enter npm i -g @loopback/cli to LoopBack4 CLI",
+
+         "cmd":
+         "npm i -g @loopback/cli"
+        },
+        {
+          "instruction":
+         "Enter lb4 app to start the Application Generator",
+
+          "cmd":
+          "lb4 app"
+        }
+      ]
+   }
+   
+  
+  ]
+  }
