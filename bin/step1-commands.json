@@ -4,8 +4,8 @@
    {
      "title":"step1",
      "stepmeta":"meta1",
-     "code-step-count":5,
-     "code-steps":[
+     "codestepcount":5,
+     "codesteps":[
        {
          "instruction":
          "Enter npm i -g @loopback/cli to LoopBack4 CLI",
@@ -25,8 +25,8 @@
     {
      "title":"step2",
      "stepmeta":"meta2",
-     "code-step-count":2,
-     "code-steps":[
+     "codestepcount":2,
+     "codesteps":[
        {
          "instruction":
          "Enter npm i -g @loopback/cli to LoopBack4 CLI",
