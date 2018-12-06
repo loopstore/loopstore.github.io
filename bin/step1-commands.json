@@ -3,6 +3,7 @@
  "steps":[
    {
      "title":"step1",
+     "stepmeta":"meta1",
      "code-step-count":5,
      "code-steps":[
        {
@@ -23,6 +24,7 @@
    },
     {
      "title":"step2",
+     "stepmeta":"meta2",
      "code-step-count":2,
      "code-steps":[
        {
