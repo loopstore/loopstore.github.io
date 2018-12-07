@@ -67,7 +67,7 @@
         }
       ,
         {
-         "enter_only",
+         "type":"enter_only",
         "commit after":"N",
           "instruction":
          "Hit Enter to create the LoopStore!",
@@ -76,7 +76,7 @@
         }
       ,
         {
-        "bash",
+       "type":"bash",
         "commit after":"Y",
          "commit message":"Finished Step 1",
           "instruction":
