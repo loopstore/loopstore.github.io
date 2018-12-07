@@ -2,23 +2,87 @@
  "title":"LoopStore: Building a Store with LoopBack 4",
  "steps":[
    {
-     "title":"step1",
-     "stepmeta":"meta1",
-     "codestepcount":5,
+    
+    "title":"Getting a Ping: Install the LoopBack CLI and create the LoopStore app",
+     
+     "code_step_num":1,
+     "code_step_count":9,
      "codesteps":[
        {
+        "type":"bash",
+        "commit after":"N",
+         "instruction":
+         "Check your node version",
+         "cmd":
+         "node -v"
+        },
+       {
+        "type":"bash",
+        "commit after":"N",
          "instruction":
          "Enter npm i -g @loopback/cli to LoopBack4 CLI",
-
          "cmd":
          "npm i -g @loopback/cli"
         },
         {
+         "type":"bash",
+        "commit after":"N",
           "instruction":
          "Enter lb4 app to start the Application Generator",
-
           "cmd":
           "lb4 app"
+        },
+        {
+         "type":"generator_step",
+        "commit after":"N",
+          "instruction":
+         "For \"Project name\" enter \"loopstore\"",
+          "cmd":
+          "loopstore"
+        },
+        {
+         "type":"generator_step",
+        "commit after":"N",
+          "instruction":
+         "For \"Project description\" enter \"Building a store with LoopBack 4\"",
+          "cmd":
+          "\"Building a store with LoopBack 4\""
+        },
+        {
+         "type":"generator_step",
+        "commit after":"N",
+          "instruction":
+         "For \"Project root directory\" enter \"loopback\"",
+          "cmd":
+          "loopback"
+        }
+      ,
+        {
+         "type":"generator_step",
+        "commit after":"N",
+          "instruction":
+         "For \"Application class name\" enter \"LoopstoreApplication\"",
+          "cmd":
+          "\"LoopstoreApplication\""
+        }
+      ,
+        {
+         "enter_only",
+        "commit after":"N",
+          "instruction":
+         "Hit Enter to create the LoopStore!",
+          "cmd":
+          ""
+        }
+      ,
+        {
+        "bash",
+        "commit after":"Y",
+         "commit message":"Finished Step 1",
+          "instruction":
+         "Hit Enter to create the LoopStore!",
+          "cmd":
+          ""
         }
       ]
    },
@@ -26,22 +90,7 @@
      "title":"step2",
      "stepmeta":"meta2",
      "codestepcount":2,
-     "codesteps":[
-       {
-         "instruction":
-         "Enter npm i -g @loopback/cli to LoopBack4 CLI",
-
-         "cmd":
-         "npm i -g @loopback/cli"
-        },
-        {
-          "instruction":
-         "Enter lb4 app to start the Application Generator",
-
-          "cmd":
-          "lb4 app"
-        }
-      ]
+     "codesteps":[]
    }
    
   
